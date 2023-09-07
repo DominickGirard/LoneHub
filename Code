@@ -1,0 +1,1241 @@
+--api https://github.com/shlexware/Orion/blob/main/Documentation.md
+repeat wait() until game:IsLoaded() wait()
+local DoneVersion = false
+local GamesSupported = { ["BasePlateGame"] = 4483381587, ["CountlessWorlds"] = 10297737442,["CriticalLegends"] = 8619263259, ["AnimeFruitSimulator"] = 10446125875, ["Deadly Sins Retribution"] = 2066381781}
+local Title = "Lone Hub"
+
+local OrionLib = loadstring(game:HttpGet(('https://gist.githubusercontent.com/LonePotatoScripts/81b842c15e752f5f6fe3b6a7e167372f/raw/loneDarkLib.lua')))()
+local Window = OrionLib:MakeWindow({Name = Title, HidePremium = false, SaveConfig = true, ConfigFolder = "LoneHub", IntroEnabled = DoneVersion, IntroText = "Lone Hub", IntroIcon = "rbxassetid://11852410564"})
+local player = game:GetService("Players").LocalPlayer
+
+--afk--
+local vu = game:GetService("VirtualUser")
+player.Idled:connect(function()
+	vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+	wait(1)
+	vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
+--afk--
+
+
+local General = Window:MakeTab({
+	Name = "General",
+	Icon = "rbxassetid://7733955906",
+	PremiumOnly = false
+})
+
+-----GamePages-----
+if game.PlaceId == GamesSupported["Deadly Sins Retribution"] then
+    getgenv().Race = false
+    getgenv().Magic = false
+
+    local DeadlyWindow = Window:MakeTab({
+        Name = "Sins Retribution",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+
+    local function BreakDataSave()
+        game:GetService("Players").LocalPlayer.PlayerGui.MainUI.LocalScript.Clothes:FireServer("\255")
+    end
+
+    local function FixDataSave()
+        game:GetService("Players").LocalPlayer.PlayerGui.MainUI.LocalScript.Clothes:FireServer("Yaban")
+    end
+
+    
+    local MythicalSelect = false
+    local LegendarySelect = false
+    local EpicSelect = false
+    local RareSelect = false
+    local UncommonSelect = false
+    local CommonSelect = false
+
+    local LegendaryTable = {"Sunshine","Infinity","Babylon","HellBlaze"}
+    local EpicTable = {"Wind","Cryomancy"}
+    local RareTable = {"Nitro","Lightning"}
+    local UncommonTable = {"Frostbite","Dark"}
+    local CommonTable = {"Earth","Blaze"}
+
+
+    local MythicalRaceTable = {"Reaper"}
+    local LegendaryRaceTable = {"Curse", "Royal Demon", "Deity", "Royal Fairy", "Royal Vampire"}
+    local EpicRaceTable = {"Demon","Goddess"}
+    local RareRaceTable = {"Fairy"}
+    local UncommonRaceTable = {"Vampire"}
+    local CommonRaceTable = {"Human"}
+
+    local function SpinRace()
+        getgenv().Race = true
+        while getgenv().Race and game:GetService("Players").LocalPlayer.Data.RaceSpins.Value > 0 do
+            wait(0.2)
+            local race = game:GetService("Players").LocalPlayer.Data.Race.Value
+
+            if MythicalSelect then
+                if table.find(MythicalRaceTable, race) then
+                    warn("Mythical ", race)
+                    getgenv().Race = false
+                    return
+                end
+            end
+
+            if LegendarySelect then
+                if table.find(LegendaryRaceTable, race) then
+                    warn("Legendary ", race)
+                    getgenv().Race = false
+                    return
+                end
+            end
+
+            if EpicSelect then
+                if table.find(EpicRaceTable, race) then
+                    warn("Epic ", race)
+                    getgenv().Race = false
+                    return
+                end
+            end
+
+            if RareSelect then
+                if table.find(RareRaceTable, race) then
+                    warn("Rare ", race)
+                    getgenv().Race = false
+                    return
+                end
+            end
+
+            if UncommonSelect then
+                if table.find(UncommonRaceTable, race) then
+                    warn("UnCommon ", race)
+                    getgenv().Race = false
+                    return
+                end
+            end
+
+            if CommonSelect then
+                if table.find(CommonRaceTable, race) then
+                    warn("Common ", race)
+                    getgenv().Race = false
+                    return
+                end
+            end
+
+            
+            
+            local Instance = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Contents.RaceMagic
+            game:GetService("Players").LocalPlayer.PlayerGui.MainUI.LocalScript.RaceSpin:FireServer(Instance)
+            wait(0.8)
+            local race = game:GetService("Players").LocalPlayer.Data.Race.Value
+            warn("Spinned: ", race)
+            wait()
+        end
+    end
+
+    local function SpinMagic()
+        getgenv().Magic = true
+        while getgenv().Magic and game:GetService("Players").LocalPlayer.Data.MagicSpins.Value > 0 do
+            wait(0.2)
+            local MagicCurrentRole = game:GetService("Players").LocalPlayer.Data.Magic1.Value
+
+
+            if LegendarySelect then
+                if table.find(LegendaryTable, MagicCurrentRole) then
+                    warn("Legendary ", MagicCurrentRole)
+                    getgenv().Magic = false
+                    return
+                end
+            end
+
+            if EpicSelect then
+                if table.find(EpicTable, MagicCurrentRole) then
+                    warn("Epic ", MagicCurrentRole)
+                    getgenv().Magic = false
+                    return
+                end
+            end
+
+            if RareSelect then
+                if table.find(RareTable, MagicCurrentRole) then
+                    warn("Rare ", MagicCurrentRole)
+                    getgenv().Magic = false
+                    return
+                end
+            end
+
+            if UncommonSelect then
+                if table.find(UncommonTable, MagicCurrentRole) then
+                    warn("UnCommon ", MagicCurrentRole)
+                    getgenv().Magic = false
+                    return
+                end
+            end
+
+            if CommonSelect then
+                if table.find(CommonTable, MagicCurrentRole) then
+                    warn("Common ", MagicCurrentRole)
+                    getgenv().Magic = false
+                    return
+                end
+            end
+
+            
+            
+            local Instance = game:GetService("Players").LocalPlayer.PlayerGui.MainUI.Contents.RaceMagic
+            game:GetService("Players").LocalPlayer.PlayerGui.MainUI.LocalScript.Magic1Spin:FireServer(Instance)
+            wait(0.8)
+            local race = game:GetService("Players").LocalPlayer.Data.Magic1.Value
+            warn("Spinned: ", MagicCurrentRole)
+            wait()
+        end
+    end
+
+    local SaveTab = DeadlyWindow:AddSection({
+	    Name = "Save Stuff"
+    })
+
+    local Activators = DeadlyWindow:AddSection({
+	    Name = "Spin stuff"
+    })
+
+    Activators:AddToggle({
+        Name = "Spin Race",
+        Default = false,
+        
+        Callback = function(Value)
+            if Value then
+                BreakDataSave()
+                SpinRace()
+            else
+                getgenv().Race = false
+            end
+        end    
+    })
+
+    Activators:AddToggle({
+        Name = "Spin Magic",
+        Default = false,
+        Callback = function(Value)
+            if Value then
+                BreakDataSave()
+                SpinMagic()
+            else
+                getgenv().Magic = false
+            end
+        end    
+    })
+
+    
+
+    Activators:AddButton({
+        Name = "Rejoin Server",
+        Callback = function()
+            game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+          end    
+    })
+
+    local Codes = {"arcaneodyssey", "newyear2023", "happyholidays2022","thankful2","thankful","bossnerf","tiktokup", "dsrtiktok", "anniversarytreat", "dsryoutube", "giftchange", "dropthegifts", "getthepumpkin", "anniversarydelayed", "freereset9", "happyhalloween", "spookyseason", "fabisworking", "freereset8", "rarerace", "raremagic1", "fabis23now", "halloweenpart2soon", "weloveexp", "wereallydolovedsr", "freereset7", "octobergoals", "happycode", "halloweenpoint", "deadlyforest", "halloweenreward", "halloweenfix", "halloweenpart1", "delaycode", "preupdatepatch", "update4coming", "55klikes", "somefixes", "hellblaze", "mondayupdate"}
+    Activators:AddButton({
+        Name = "Redeem Codes",
+        Callback = function()
+            BreakDataSave()
+            for i,v in pairs(Codes) do
+                wait(0.1)
+                player.PlayerGui.MainUI.LocalScript.Code:FireServer(v, player.PlayerGui.MainUI.Contents.RaceMagic.CodeBar.TextBox);
+            end
+
+        end    
+    })
+
+    SaveTab:AddLabel("If you are confused on how to use the script ")
+    SaveTab:AddLabel("Watch the video on it at LonePotato Youtube Channel")
+
+
+
+    SaveTab:AddLabel("Fix save will save your current race and magic")
+    SaveTab:AddButton({
+        Name = "Fix Saving",
+        Callback = function()
+            FixDataSave()
+          end    
+    })
+
+
+    local WantedRace = DeadlyWindow:AddSection({
+	    Name = "Wanted Race Rarity"
+    })
+
+    WantedRace:AddToggle({
+        Name = "Common",
+        Default = false,
+        Save = true,
+        Flag = "Common",
+        Callback = function(Value)
+            CommonSelect = Value
+        end    
+    })
+
+    WantedRace:AddToggle({
+        Name = "UnCommon",
+        Default = false,
+        Save = true,
+        Flag = "UnCommon",
+        Callback = function(Value)
+            UncommonSelect = Value
+        end    
+    })
+
+    WantedRace:AddToggle({
+        Name = "Rare",
+        Default = false,
+        Save = true,
+        Flag = "Rare",
+        Callback = function(Value)
+            RareSelect = Value
+        end    
+    })
+
+    WantedRace:AddToggle({
+        Name = "Epic",
+        Default = false,
+        Save = true,
+        Flag = "Epic",
+        Callback = function(Value)
+            EpicSelect = Value
+        end    
+    })
+
+    WantedRace:AddToggle({
+        Name = "Legendary",
+        Default = false,
+        Save = true,
+        Flag = "Legendary",
+        Callback = function(Value)
+            LegendarySelect = Value
+        end    
+    })
+
+    WantedRace:AddToggle({
+        Name = "Mythical",
+        Default = false,
+        Save = true,
+        Flag = "Mythical",
+        Callback = function(Value)
+            MythicalSelect = Value
+        end    
+    })
+
+end
+
+if game.PlaceId == GamesSupported["AnimeFruitSimulator"] then
+    getgenv().ChosenEnemy = nil
+    getgenv().ChosenZone = nil
+    getgenv().AutoFarm = false
+    getgenv().BossFarm = false
+    getgenv().FastKill = false
+    getgenv().ChosenEgg = nil
+    getgenv().AutoSingleEgg = false
+    getgenv().AutoTripleEgg = false
+
+    local AnimeFruitSimulator = Window:MakeTab({
+		Name = "Fruit Simulator",
+		Icon = "rbxassetid://7733752575",
+		PremiumOnly = false
+	})
+	
+	local AutoFarmTab = AnimeFruitSimulator:AddSection({
+	    Name = "AutoFarm"
+    })
+
+    local Fruits = AnimeFruitSimulator:AddSection({
+	    Name = "Fruits"
+    })
+
+    local Eggs = AnimeFruitSimulator:AddSection({
+	    Name = "Eggs"
+    })
+
+    local Misc = AnimeFruitSimulator:AddSection({
+	    Name = "Misc"
+    })
+
+    local Misc = AnimeFruitSimulator:AddSection({
+	    Name = "Vip Room"
+    })
+
+
+    local CombatMod = require(game:GetService("ReplicatedStorage")["Shared_Modules"].Combat.Core)
+
+    local function GetAllEnemies()
+        local Enemies = {}
+        for i, v in pairs(game:GetService("Workspace").EnemySpawnPoints:GetDescendants()) do 
+            if v.Name == "NameTag" then
+                local Enemy = v.Parent.Parent
+                if not table.find(Enemies, v.NameLabel.Text) then
+                    table.insert(Enemies, v.NameLabel.Text)
+                end
+            end
+        end
+        return Enemies
+    end
+
+    local function getFruits()
+        local FruitNames = {}
+        for i, v in pairs(game:GetService("Workspace").FruitSpawns:GetChildren()) do 
+            if not table.find(FruitNames, v.Name) then
+                table.insert(FruitNames, v.Name)
+            end
+        end
+        return FruitNames
+    end
+
+    
+
+    local function FindBoss()
+        local Highesthealth = 0 
+        local BigEnemy = nil
+        for i, v in pairs(game:GetService("Workspace").EnemySpawnPoints:GetDescendants()) do
+            if v.Name == "Humanoid" then
+                local SelectedWall = game:GetService("Workspace").ZoneEntrances:FindFirstChild(getgenv().ChosenZone)
+                local Enemy = v.Parent 
+                if Enemy.HumanoidRootPart.Position.X > SelectedWall.Position.X then
+                    if game:GetService("Workspace").ZoneEntrances:FindFirstChild(getgenv().ChosenZone-1) then
+                        local BeforeWall = game:GetService("Workspace").ZoneEntrances:FindFirstChild(getgenv().ChosenZone - 1)
+                        if Enemy.HumanoidRootPart.Position.X < BeforeWall.Position.X then
+                            if v.MaxHealth > Highesthealth then
+                                Highesthealth = v.MaxHealth
+                                BigEnemy = v.Parent
+                            end
+                        end
+                    else
+                        if v.MaxHealth > Highesthealth then
+                            Highesthealth = v.MaxHealth
+                            BigEnemy = v.Parent
+                        end
+                    end
+                end
+            end
+        end
+        return BigEnemy
+    end
+
+    local function Attack(OrginalEnemy)
+        local Enemy = OrginalEnemy
+        if getgenv().BossFarm then
+            Enemy = FindBoss()
+        end
+        player.Character.HumanoidRootPart.CFrame = Enemy.HumanoidRootPart.CFrame
+        CombatMod.AutoAttack(CombatMod, player.Character)
+        game:GetService("ReplicatedStorage").Remotes.Validate:FireServer("One")
+        game:GetService("ReplicatedStorage").Remotes.Validate:FireServer("Two")
+        game:GetService("ReplicatedStorage").Remotes.Validate:FireServer("Three")
+       if Enemy.Humanoid.Health < Enemy.Humanoid.MaxHealth and getgenv().FastKill == true then
+            Enemy.Humanoid.Health = 0
+       end
+    end
+  
+    local function AutoFarm()
+        getgenv().AutoFarm = true
+        while wait(1) do
+            if not getgenv().AutoFarm then break end
+            for i, v in pairs(game:GetService("Workspace").EnemySpawnPoints:GetDescendants()) do 
+                if v.Name == "NameTag" then
+                    local Enemy = v.Parent.Parent
+                    if Enemy.Humanoid.Health > 0 then
+                        local SelectedWall = game:GetService("Workspace").ZoneEntrances:FindFirstChild(getgenv().ChosenZone)
+                        if Enemy.HumanoidRootPart.Position.X > SelectedWall.Position.X then
+                            if game:GetService("Workspace").ZoneEntrances:FindFirstChild(getgenv().ChosenZone-1) then
+                                local BeforeWall = game:GetService("Workspace").ZoneEntrances:FindFirstChild(getgenv().ChosenZone - 1)
+                                if Enemy.HumanoidRootPart.Position.X < BeforeWall.Position.X then
+                                    Attack(Enemy)
+                                end
+                            else
+                                Attack(Enemy)
+                            end
+                        end
+                    end
+                   -- player.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").ZoneEntrances:FindFirstChild(getgenv().ChosenZone).CFrame
+                    
+                end
+            end
+        end
+    end
+
+    AutoFarmTab:AddToggle({
+        Name = "Auto Farm",
+        Default = false,
+        Callback = function(Value)
+            if Value then
+                AutoFarm()
+            else
+                getgenv().AutoFarm = false
+            end
+        end    
+    })
+
+    AutoFarmTab:AddDropdown({
+        Name = "Choose Farm Zone",
+        Default = 2,
+        Options = {2,3,4,5,6,7,8,9,10,11},
+        Callback = function(Value)
+            getgenv().ChosenZone = Value
+            
+        end    
+    })
+
+    AutoFarmTab:AddButton({
+        Name = "Teleport To Selected Zone(Loads mobs in)",
+        Callback = function()
+            local SelectedWall = game:GetService("Workspace").ZoneEntrances:FindFirstChild(getgenv().ChosenZone)
+            player.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").ZoneEntrances[tostring(SelectedWall)].CFrame 
+          end    
+    })
+
+    AutoFarmTab:AddToggle({
+        Name = "Only Farm Boss",
+        Default = false,
+        Callback = function(Value)
+            getgenv().BossFarm = Value
+        end    
+    })
+
+
+     local FruitDropdown = Fruits:AddDropdown({
+        Name = "Spawned Fruits",
+        Default = "...",
+        Options = getFruits(),
+        Callback = function(Value)
+            if game:GetService("Workspace").FruitSpawns:FindFirstChild(Value) then
+                local Fruit =  game:GetService("Workspace").FruitSpawns:FindFirstChild(Value)
+                player.Character.HumanoidRootPart.CFrame = Fruit.PrimaryPart.CFrame + Vector3.new(0,1,0)
+                Fruit.ProximityPrompt.MaxActivationDistance = 9999
+                coroutine.wrap(function()
+                    pcall(function() 
+                       
+                        fireproximityprompt(Fruit.ProximityPrompt)
+                        wait(0.1)
+                        fireproximityprompt(Fruit.ProximityPrompt)
+                        wait(0.1)
+                        fireproximityprompt(Fruit.ProximityPrompt)
+                        wait(0.1)
+                        fireproximityprompt(Fruit.ProximityPrompt)
+                        wait(0.1)
+                        fireproximityprompt(Fruit.ProximityPrompt)
+                        wait(0.1)
+                        fireproximityprompt(Fruit.ProximityPrompt)
+                        wait(0.1)
+                    end)
+                end)()
+            end
+        end    
+    })
+
+
+    coroutine.wrap(function()
+        while wait(1) do
+            FruitDropdown:Refresh(getFruits(),true)
+        end
+    end)()
+
+    local function GetEggs()
+        local EggsList = {}
+        for i ,v in pairs(game:GetService("Workspace").Maps.Eggs:GetChildren()) do 
+            if not table.find(EggsList, v.Name) then
+                table.insert(EggsList, v.Name)
+            end
+        end
+        return EggsList
+    end
+
+    local function AutoSingleEgg()
+        getgenv().AutoSingleEgg = true
+        while wait(1) do
+            if not getgenv().AutoSingleEgg then break end
+            game:GetService("ReplicatedStorage").Remotes.Egg:FireServer(getgenv().ChosenEgg, "HatchBtn")
+        end
+    end
+
+    local function AutoTripleEgg()
+        getgenv().AutoTripleEgg = true
+        while wait(1) do
+            if not getgenv().AutoTripleEgg then break end
+            game:GetService("ReplicatedStorage").Remotes.Egg:FireServer(getgenv().ChosenEgg, "TrippleBtn")
+        end
+    end
+
+    Eggs:AddDropdown({
+        Name = "Choose Egg",
+        Default = "...",
+        Options = GetEggs(),
+        Callback = function(Value)
+            getgenv().ChosenEgg = Value
+        end    
+    })
+
+    Eggs:AddToggle({
+        Name = "Auto Single Egg",
+        Default = false,
+        Callback = function(Value)
+            if Value then
+                AutoSingleEgg()
+            else
+                getgenv().AutoSingleEgg = false
+            end
+            
+        end    
+    })
+
+    Eggs:AddToggle({
+        Name = "Auto Triple Egg",
+        Default = false,
+        Callback = function(Value)
+            if Value then
+                AutoTripleEgg()
+            else
+                getgenv().AutoTripleEgg = false
+            end
+        end    
+    })
+
+    Misc:AddToggle({
+        Name = "Unlock Some GamePasses",
+        Default = false,
+        Callback = function(Value)
+            local folder = player.PassBools
+            folder["Teleport_Anywhere"].Value = Value
+            folder["2x_Coins"].Value = Value
+            folder["2x_Gems"].Value = Value
+            folder.VIP.Value = Value
+            folder["Fruit_Storage_250"].Value = Value
+            folder["Pet_Storage_250"].Value = Value
+        end    
+    })
+
+
+
+end
+
+if game.PlaceId == GamesSupported["CriticalLegends"] then
+    getgenv().AutoAttack = false
+    getgenv().AutoFarm = false
+    getgenv().GodMode = false
+    getgenv().AutoStats = false
+    
+
+    local CriticalLegends = Window:MakeTab({
+		Name = "CriticalLegends",
+		Icon = "rbxassetid://7733752575",
+		PremiumOnly = false
+	})
+	
+	local AutoFarmTab = CriticalLegends:AddSection({
+	    Name = "AutoFarm"
+    })
+
+    local Auto = CriticalLegends:AddSection({
+	    Name = "Auto"
+    })
+
+    local Misc = CriticalLegends:AddSection({
+	    Name = "Misc"
+    })
+
+    local Teleports = CriticalLegends:AddSection({
+	    Name = "Teleports"
+    })
+    
+    --hooks--
+
+    ---godmode hook---
+    local function hook()
+        for i, v in pairs(getgc()) do
+            if not is_synapse_function(v) and getinfo(v).name then
+                if getinfo(v).name == "ontouch" then
+                    local old 
+                    old = hookfunction(getinfo(v).func, function(...) 
+                        if getgenv().GodMode then
+                            return nil
+                        end
+                        return old(...) 
+                    end)
+                end
+            end
+        end
+    end
+    
+    player.CharacterAdded:Connect(function(Player)
+        wait(4)
+		hook()
+	end)
+
+    --hooks--
+    Auto:AddToggle({
+    	Name = "AutoAttack",
+    	Default = false,
+    	Save = true,
+        Flag = "AutoAttack",
+    	Callback = function(Value)
+    		if Value then
+                getgenv().AutoAttack = true
+        	    while wait(0.3) do
+                    if not getgenv().AutoAttack then break end
+                    if game:GetService("Workspace"):FindFirstChild("CombatFolder") then
+                        local CombatFolder = game:GetService("Workspace"):FindFirstChild("CombatFolder")
+                        if CombatFolder:FindFirstChild(game.Players.LocalPlayer.name) then
+                            local PlayerFolder = CombatFolder:FindFirstChild(game.Players.LocalPlayer.name)
+                            for i, v in pairs(PlayerFolder:GetChildren()) do
+                                if v:FindFirstChild("HitBox") then
+                                    firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.HitBox, 0)
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+        	else
+                getgenv().AutoAttack = false
+    		end
+    	end  
+    })
+
+    local SelectedStat = ""
+
+    local function AutoStats()
+        while wait(0.3) do
+            if not getgenv().AutoStats then break end
+            game:GetService("ReplicatedStorage").Server:FireServer("Invest", SelectedStat)
+        end
+    end
+
+    local SelectedMob = ""
+    local function AutoFarm()
+        while wait(1) do
+            if not getgenv().AutoFarm then break end
+            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if v:IsA("Folder") then
+                    for i, v in pairs(v:GetChildren()) do 
+                        if v:IsA("Model") then
+                            if  v.Model.Value.Name == SelectedMob and player.Character.InCombat.Value == false  then
+                                
+                                if v.InCombat.Value == false then
+                                    
+                                    player.Character.HumanoidRootPart.CFrame = v.EnemyLocation.CFrame
+                                    v.CombatTrigger:FireServer("Solo")
+                                    break
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
+
+    local function getMobNames()
+        local mobTable = {}
+        for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+            if v:IsA("Folder") then
+                for i, v in pairs(v:GetChildren()) do 
+                    if v:IsA("Model") then
+                        if not table.find(mobTable, v.Model.Value.Name) then
+                            table.insert(mobTable, v.Model.Value.Name)
+                        end
+                    end
+                end
+            end
+        end
+        return mobTable
+    end
+
+    local autoFarmToggle = AutoFarmTab:AddToggle({
+    	Name = "Auto Farm",
+    	Default = false,
+    	Save = false,
+        Flag = "Auto Farm",
+    	Callback = function(Value)
+    		if Value then
+                getgenv().AutoFarm = true
+                AutoFarm()
+        	else
+                getgenv().AutoFarm = false
+                
+    		end
+    	end  
+    })
+
+    AutoFarmTab:AddDropdown({
+        Name = "Select Mob",
+        Default = "",
+        Options = getMobNames(),
+        Save = true,
+        Flag = "Select Mob",
+        Callback = function(Value)
+           SelectedMob = Value
+        end    
+    })
+
+    Auto:AddToggle({
+    	Name = "AutoStats",
+    	Default = false,
+    	Save = true,
+        Flag = "AutoStats",
+    	Callback = function(Value)
+            if Value then
+                getgenv().AutoStats = true
+                AutoStats()
+            else
+                getgenv().AutoStats = false
+            end
+    	end  
+    })
+
+    local Statues = Auto:AddDropdown({
+        Name = "Select Stat",
+        Default = "",
+        Options = {"Health", "Damage", "Magic", "Mana", "Shield"},
+        Save = true,
+        Flag = "Stat",
+        Callback = function(Value)
+            SelectedStat = Value
+        end    
+    })
+
+
+    Misc:AddToggle({
+    	Name = "Godmode",
+    	Default = false,
+    	Save = true,
+        Flag = "Godmode",
+    	Callback = function(Value)
+            getgenv().GodMode = Value
+            if Value then
+                hook()
+            end
+    	end  
+    })
+
+    
+    local function GetStatuesTable()
+        local statueTable = {}
+        for i ,v in pairs(game:GetService("Workspace").Statues:GetChildren()) do
+            table.insert(statueTable, v.Name)
+        end
+        return statueTable
+    end
+
+    local function MaterialsGiver()
+        for i,v in pairs(game:GetService("Workspace").MaterialGivers:GetDescendants()) do
+            if v.Name == "Giver" then
+                firetouchinterest(player.Character.HumanoidRootPart, v,0)
+                wait(0.3)
+            end
+        end
+    end
+
+    local Statues = Teleports:AddDropdown({
+        Name = "Statues Teleport",
+        Default = "",
+        Options = GetStatuesTable(),
+        Save = false,
+        Flag = "Tele",
+        Callback = function(Value)
+            if game:GetService("Workspace").Statues:FindFirstChild(Value):FindFirstChild("Orb") then
+                player.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Statues:FindFirstChild(Value).Orb.CFrame
+                else
+                player.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").Statues:FindFirstChild(Value).Base.CFrame  
+            end
+        end    
+    })
+
+    Misc:AddButton({
+    	Name = "Materials Giver",
+    	Callback = function()
+            MaterialsGiver()
+      	end    
+    })
+
+    Misc:AddButton({
+    	Name = "Open Chests",
+    	Callback = function()
+            for i, v in pairs(game:GetService("Workspace").Chests:GetChildren()) do
+                if v:IsA("Model") then
+                    wait(0.3)
+                    firetouchinterest(player.Character.HumanoidRootPart, v.Giver,0)
+                end
+            end
+      	end    
+    })
+
+end
+
+
+if game.PlaceId == GamesSupported["CountlessWorlds"] then
+    getgenv().AutoFarm = false
+    getgenv().AutoAttack = false
+    getgenv().AutoPickUp = false
+    
+    --Hooks--
+    
+    local CombatMod = require(game.Players.LocalPlayer.PlayerScripts.Combat)
+    local OldFireServer
+    OldFireServer = hookfunction(CombatMod.OrbCreate, function(Event, ...)
+        local Args = ...
+        if getgenv().AutoAttack then
+            Args[1] = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+        end
+        return OldFireServer(Event, Args)
+    end)
+    --Hooks--
+    
+    
+    
+    AutoFamrmMobName = "Small Bee"
+
+    local function ActivateAutoFarm(MobName)
+        getgenv().AutoFarm = true
+        local CharacterPart = game.Players.LocalPlayer.Character.HumanoidRootPart
+        while wait() do
+        	if not getgenv().AutoFarm then break end
+        	 if MobName then
+                local Character = game.Players.LocalPlayer.Character.HumanoidRootPart
+                local MobFolder = game:GetService("Workspace").MobSpawns
+                for i, v in pairs(MobFolder:GetDescendants()) do
+                   if v:IsA("StringValue") and v.Value == MobName and v.Parent:FindFirstChild("InCombat") then
+                       if v.Parent.InCombat.Value == false and not game:GetService("Workspace"):FindFirstChild("Client_Assets"):FindFirstChild("Collision") then
+                            Character.CFrame = v.Parent.Parent.CFrame
+                       end
+                    end
+                end
+                wait(4)
+            end   
+        end	
+    end 
+    
+    
+
+    
+    function GetUniqueTable()
+        local MobNameTable = {}
+        for i, v in pairs(game:GetService("ReplicatedStorage").Mobs:GetChildren()) do
+            if v:IsA("Model") then
+                if not table.find(MobNameTable, v.Name) then
+                    table.insert(MobNameTable, v.Name)
+                end
+            end    
+        end
+        return MobNameTable
+    end
+
+    
+  
+    
+    
+    
+	local CountlessWorlds = Window:MakeTab({
+		Name = "CountlessWorlds",
+		Icon = "rbxassetid://7733752575",
+		PremiumOnly = false
+	})
+	
+	local Auto = CountlessWorlds:AddSection({
+	    Name = "Auto"
+    })
+
+    local Misc = CountlessWorlds:AddSection({
+	    Name = "Misc"
+    })
+    
+    local OriginalFunctions = {}
+    local function test()
+        for i, v in pairs(game:GetService("ReplicatedStorage").MobAI.SkillList:GetChildren()) do
+      	    local Module = require(v)
+
+            Module.Load = OriginalFunctions[i]
+        end
+    end
+    
+    local OriginalFunctions = {}
+    
+    Misc:AddToggle({
+    	Name = "DisableMobs",
+    	Default = false,
+    	Save = true,
+        Flag = Name,
+    	Callback = function(Value)
+    		if Value then
+        	    for i, v in pairs(game:GetService("ReplicatedStorage").MobAI.SkillList:GetChildren()) do
+              	    local Module = require(v)
+              	    table.insert(OriginalFunctions, i, Module.Load)
+                    Module.Load = function() return false end
+                end 
+        	else
+                for i, v in pairs(game:GetService("ReplicatedStorage").MobAI.SkillList:GetChildren()) do
+      	            if OriginalFunctions[i] then
+          	            local Module = require(v)
+                        Module.Load = OriginalFunctions[i]
+                    end
+                end
+    		end
+    	end  
+    })
+
+    Misc:AddToggle({
+    	Name = "PickUpAll",
+    	Default = false,
+    	Save = true,
+        Flag = Name,
+    	Callback = function(Value)
+    		if Value then
+    		    getgenv().AutoPickUp = true
+    		    while wait(.5) do
+    		        if not getgenv().AutoPickUp then break end
+            	    for i, v in pairs(game:GetService("Workspace").Globes:GetChildren()) do
+            	       v.Grab:FireServer() 
+            	    end
+            	    for i, v in pairs(game:GetService("Workspace").Dropped:GetChildren()) do
+            	       v.Grab:FireServer() 
+            	    end
+        	    end
+        	else
+                getgenv().AutoPickUp = false
+    		end
+    	end  
+    })
+
+    local OriginalFunction
+    local Params1 
+    local Params2
+
+    local TeleportPlayerDropdowm = Auto:AddDropdown({
+	Name = "Mob Select",
+	Default = "",
+	Options = GetUniqueTable(),
+	Save = true,
+    Flag = "Tele",
+	Callback = function(Value)
+
+		player.Character.HumanoidRootPart.CFrame = game.Workspace:FindFirstChild(Value).HumanoidRootPart.CFrame
+	end    
+    })
+
+    Auto:AddButton({
+    	Name = "Refresh Dropdown",
+    	Callback = function()
+          		TeleportPlayerDropdowm:Refresh(GetPlayersStrings(),true)
+      	end    
+    })
+	
+    Auto:AddToggle({
+	Name = "Auto Farm",
+	Default = false,
+	Save = false,
+    Flag = "AutoFarm",
+	Callback = function(Value)
+		if Value then
+    	    ActivateAutoFarm(AutoFamrmMobName)
+    	    else
+            getgenv().AutoFarm = false
+		end
+	end  
+    })
+
+    Auto:AddToggle({
+	Name = "AutoAttack",
+	Default = false,
+	Save = false,
+    Flag = "AutoAttack",
+	Callback = function(Value)
+		if Value then
+    	    getgenv().AutoAttack = true
+    	    else
+            getgenv().AutoAttack = false
+		end
+	end  
+    })
+
+    
+
+end
+
+-----GamePages-----
+
+local Debug = Window:MakeTab({
+	Name = "Debug",
+	Icon = "rbxassetid://7733956210",
+	PremiumOnly = false
+})
+
+Debug:AddButton({
+	Name = "Rejoin Server",
+	Callback = function()
+        game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+  	end    
+})
+
+Debug:AddButton({
+	Name = "Reset Save File",
+	Callback = function()
+        delfile("LoneHub/" .. game.GameId .. ".txt")
+  	end    
+})
+
+local infoTab = Window:MakeTab({
+	Name = "Info",
+	Icon = "rbxassetid://7733956210",
+	PremiumOnly = false
+})
+
+infoTab:AddLabel('Version: <font color="#FF7800">0.0.1</font>')
+
+local SupportedLabel = infoTab:AddLabel('Game Supported: <font color="#FF0000">No</font>')
+for i, v in pairs(GamesSupported) do
+    if game.PlaceId == v then
+        SupportedLabel:Set('Game Supported: <font color="#00FF00">Yes</font>')
+    end
+end
+
+local PlayerMovement = General:AddSection({
+	Name = "Movement"
+})
+
+local PlayerTele = General:AddSection({
+	Name = "Teleport"
+})
+
+local PlayerExtra = General:AddSection({
+	Name = "Extra"
+})
+
+PlayerExtra:AddToggle({
+	Name = "No Clip (Not Working)",
+	Default = false,
+	Save = true,
+    Flag = "NoClip",
+	Callback = function(Value)
+		if Value then
+		    
+		    else
+		        
+		end
+	end  
+	
+})
+
+local function GetPlayersStrings()
+    local PlayersStrings = {}
+    for i, v in pairs(game.Players:GetChildren()) do 
+        PlayersStrings[i] = v.Name 
+    end
+    return PlayersStrings
+end
+
+local TeleportPlayerDropdowm = PlayerTele:AddDropdown({
+	Name = "Teleport To Player",
+	Default = "",
+	Options = GetPlayersStrings(),
+	Save = true,
+    Flag = "Tele",
+	Callback = function(Value)
+
+		player.Character.HumanoidRootPart.CFrame = game.Workspace:FindFirstChild(Value).HumanoidRootPart.CFrame
+	end    
+})
+
+PlayerTele:AddButton({
+	Name = "Refresh Dropdown",
+	Callback = function()
+      		TeleportPlayerDropdowm:Refresh(GetPlayersStrings(),true)
+  	end    
+})
+
+
+
+
+local DefualtWalkSpeed = player.Character.Humanoid.WalkSpeed
+local DefualtJumpPower = player.Character.Humanoid.JumpPower
+
+if game.PlaceId ~= GamesSupported["AnimeFruitSimulator"] then
+
+	local WalkSlider = PlayerMovement:AddSlider({
+		Name = "Walk Speed",
+		Min = 0,
+		Max = 250,
+		Default = DefualtWalkSpeed,
+		Color = Color3.fromRGB(255,255,240),
+		Increment = 1,
+		ValueName = "",
+		Callback = function(Value)
+			player.Character.Humanoid.WalkSpeed = Value
+		end    
+	})
+
+
+	local JumpPower = PlayerMovement:AddSlider({
+		Name = "Jump Height",
+		Min = 0,
+		Max = 250,
+		Default = DefualtJumpPower,
+		Color = Color3.fromRGB(255,255,240),
+		Increment = 1,
+		ValueName = "",
+		Callback = function(Value)
+			player.Character.Humanoid.JumpPower = Value
+		end    
+	})
+
+	PlayerMovement:AddButton({
+		Name = "Set Above Values To Default",
+		Callback = function()
+			WalkSlider:Set(DefualtWalkSpeed)
+			JumpPower:Set(DefualtJumpPower)
+		end    
+	})
+
+end
+
+local function JoinDiscordServer(Code)
+            local http = game:GetService("HttpService")
+            local request = (syn and syn.request) or (fluxus and fluxus.request) or request
+            if typeof(request) ~= "function" then return end
+
+            request({
+                Url = "http://127.0.0.1:6463/rpc?v=1",
+                Method = "POST",
+                Headers = {
+                    ["Content-Type"] = "application/json",
+                    ["Origin"] = "https://discord.com"
+                },
+                Body = http:JSONEncode({
+                    cmd = "INVITE_BROWSER",
+                    args = {
+                        code = Code
+                    },
+                    nonce = http:GenerateGUID()
+                })
+            })
+end
+
+
+infoTab:AddLabel("Discord: discord.gg/bnB68yPcYf")
+infoTab:AddButton({
+	Name = '<font color="#FF7800">Join Discord Server</font>',
+    	Callback = function()
+      		setclipboard("discord.gg/bnB68yPcYf")
+            JoinDiscordServer("bnB68yPcYf")
+      		OrionLib:MakeNotification({
+        	Name = "Discord Link Copied",
+    	    Content = 'Paste the link into your browser or type it manually. Link: <font color="#FF7800">discord.gg/bnB68yPcYf</font> ',
+    	    Image = "rbxassetid://7743875428",
+    	    Time = 10
+    	    
+        })
+  	end    
+})
+infoTab:AddParagraph("Something Broken?", "If you find a bug or something is not working as intended you can make a discussion post in the discord server")
+infoTab:AddParagraph("Suggestions?", "Want a feature added to the script? Join the discord and make a suggestion post! ")
+
+----------BasePlateGame----------------
+
+
+
+
+OrionLib:Init()
